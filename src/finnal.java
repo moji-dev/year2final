@@ -47,20 +47,25 @@ public class finnal {
     }
 
     public static int calculateFitness(String solution) {
-        Character[][] board = new Character[8][8];
+        int totalAttacks = 56; // Maximum number of attacks possible
+        int[] queens = new int[8];
 
         for (int i = 0; i < 8; i++) {
-            int queenPosition = Integer.parseInt(solution.substring(i * 3, (i + 1) * 3), 2);
-            Arrays.fill(board[i], '.');
-            board[i][7 - queenPosition] = 'Q';
+            queens[i] = Integer.parseInt(solution.substring(i * 3, i * 3 + 3), 2);
         }
 
-        int totalAttacks = calculateAttacks(board);
+        // Calculating number of individual attacks by each queen
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (i != j) {
+                    if (queens[i] == queens[j] || Math.abs(queens[i] - queens[j]) == Math.abs(i - j)) {
+                        totalAttacks--;
+                    }
+                }
+            }
+        }
 
-        // Calculate the fitness value
-        int fitness = 56 - totalAttacks;
-
-        return fitness;
+        return totalAttacks;
     }
 
     public static int calculateAttacks(Character[][] board) {
