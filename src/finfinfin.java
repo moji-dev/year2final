@@ -1,28 +1,27 @@
 import java.util.*;
 
-public class simmulated {
+public class finfinfin {
     private static final int BOARD_SIZE = 8;
     private static final Random random = new Random();
     private static final int MAX_ATTACKS = BOARD_SIZE * (BOARD_SIZE - 1);
 
     public static void main(String[] args) {
-        // String solution = solve(10000, 0.99);
-        // System.out.println("Solution: " + solution);
-        // System.out.println("Fitness: " + fitness(solution));
-        int y = 0;
-        for (int i = 0; i < 100; i++) {
-            String solution = solve(1000, 0.99);
-            y = y + fitness(solution);
-            System.out.println(fitness(solution));
+        int totalFitness = 0;
 
+        for (int i = 0; i < 100; i++) {
+            String solution = solve(1000);
+            int fitness = fitness(solution);
+            totalFitness += fitness;
+            // Remove this line if you don't want to print the fitness of each solution
+            // System.out.println(fitness);
         }
-        System.out.println(y / 100);
+        System.out.println(totalFitness / 100.0); // prints the average fitness after 100 runs
     }
 
-    public static String solve(int iterations, double coolingRate) {
+    public static String solve(int iterations) {
         String current = getRandomStartingArrangement();
         int currentFitness = fitness(current);
-
+        double coolingRate = 0.99;
         double temperature = 600;
 
         for (int i = 0; i < iterations; i++) {
@@ -88,5 +87,4 @@ public class simmulated {
         double probability = Math.exp((candidateFitness - currentFitness) / temperature);
         return probability > random.nextDouble();
     }
-
 }

@@ -8,6 +8,7 @@ public class finnal2 {
         String board = "";
         for (int i = 0; i < 8; i++) {
             board += String.format("%03d", Integer.parseInt(Integer.toBinaryString(rand.nextInt(8))));
+
         }
         return board;
     }
